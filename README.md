@@ -4,7 +4,7 @@ This README explains how to use 2Openproject.
 
 Here you will find a short introduction to it.
 
-2Openproject is a Script to Import Bugs/Tickets from a tool into Openproject.
+2Openproject is a script to import Bugs/Tickets from a tool into Openproject.
 
 ## Prerequisites
 
@@ -102,7 +102,7 @@ $ sudo apt-get install libmysqlcient-dev
 ```
 
 ```
-$ sudo gem install mysql
+$ sudo gem install mysql2
 ```
 
 ## How to import Bugs/Tickets into openproject
@@ -130,16 +130,6 @@ $ ./2Openproject
 --source-tool source-tool
 ```
 
-Example:
-
-```
-$ ./2Openproject 
---openproject-source /home/mmustermann/Desktop/bugzilla_bugs.xml
---openproject-projectid 1
---openproject-apikey 143b50e261187g461h1677bd4afdd260fc98tf9j
---openproject-url https://openproject-test.example.ch/projects/test
---source-tool bugzilla
-```
 
 ### Running / Params
 
@@ -155,7 +145,7 @@ or
 OTRS importer imports ticket from the OTRS database. You need a database user with at least read permisson.
 
 ```
- ./2Openproject --openproject-source ../../example_file --openproject-projectid 12121212 --openproject-apikey 3ithrfj4uihguh --openproject-url https://openproject.example.ch --source-tool otrs --status-id 2 --otrs-query p25 --otrs-queue MyQueue
+ ./2Openproject --openproject-projectid 12121212 --openproject-apikey 3ithrfj4uihguh --openproject-url https://openproject.example.ch --source-tool otrs --status-id 2 --version-id 312 --type-id 2 --priority-id 4 --otrs-query p25 --otrs-queue MyQueue
 ```
 
 | Params | Description           |
@@ -165,29 +155,31 @@ OTRS importer imports ticket from the OTRS database. You need a database user wi
 | --openproject-apikey | The API key to access to your openproject (MyAccount -> on the right side)      |
 | --openproject-url | URL to the openproject  |
 | --source-tool | which source tool you want to use (required) | Options: bugzilla, OTRS |
-| --status-id | The status-id you want to set to this file export (by default is set 1)|
+| --status-id | which status id you want to use (Default = 1) |
+| --version-id | which version id you want to use |
+| --type-id | which type id you want to use (Default = 2) |
+| --priority-id | which priority id you want to use (Default = 4) |
 | --otrs-query | otrs ticket title filter|
 | --otrs-queue | otrs queue name to import tickets from, e.g. --otrs-queue-name MyQueue|
 
+Please note: version-id has no default value. If you supply a version-id that does not exists in your openproject, then the work package will not be created.
+
 ### How do I get the StatusId or ProjectId?
 
-Go on the openproject
+Go to your openproject instance https://openproject.example.ch
+You have to be logged in.
 
-Type in the url: 
+Now add the following to your url in order to get a json-representation, from which you can see the corresponding ids you're interested in: 
 
-- projects.xml
+- /api/v3/projects/YOURPROJECT     (choose the value of "identifier", not the "id" !)
+- /api/v3/projects/YOURPROJECT/versions
+- /api/v3/statuses
+- /api/v3/priorities
+- /api/v3/types
 
-- issue_statuses.xml
-
-Examples:
-
-ProjectId: https://openproject.example.com/ptojects.xml
-
-StatusId: https://openproject.example.com/issue_statuses.xml
-
-You have to enter your password an then you see the xml file with the id's.
 
 ## Database credentials for OTRS
 
-In the root directory is a file called: db_credentials.yml
-Write your username, password, hostadress and database name to this file.
+In the root directory is a file called: db_credentials.yml.template
+Rename it db_credentials.yml and write your username, password, hostadress and database name to this file.
+

@@ -10,6 +10,7 @@ class Importer
   DEFAULT_VALUES = {
     status_id: 3,
     priority_id: 4,
+    type_id: 2,
     priority_name: 'Normal',
 #    fixed_version_id: 1521
   }
