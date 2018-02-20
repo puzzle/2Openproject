@@ -24,18 +24,6 @@ class Exporter
 #    puts "Initialize export object"
   end
 
-  def export_source_entry(entry)
-    params = {}
-    OpenprojectWorkpackage::ATTRS.each do |a|
-      params[a] = param_value(a, entry)
-    end
-#      puts "XXXXXXXXXXXX"
-#      puts params
-#      puts "YYYYY_to_JSSONA_YYYYYYYy"
-#      puts params.to_json
-    OpenprojectWorkpackage.new(params)
-  end
-
   def export
     puts "Nun in def export"
 
