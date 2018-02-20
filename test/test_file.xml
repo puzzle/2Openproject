@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bugzilla>
+  <bug>
+    <bug_id>1</bug_id>
+    <creation_ts>2014-01-01 16:48:00 +0200</creation_ts>
+    <short_desc>Test eines Testes</short_desc>
+    <delta_ts>2014-01-01 16:48:53 +0200</delta_ts>
+    <reporter_accessible>1</reporter_accessible>
+    <cclist_accessible>1</cclist_accessible>
+    <classification_id>1</classification_id>
+    <classification>Unclassified</classification>
+    <product>Test</product>
+    <component>Logik</component>
+    <version>2</version>
+    <rep_platform>All</rep_platform>
+    <op_sys>All</op_sys>
+    <bug_status>NEW</bug_status>
+    <priority>P1</priority>
+    <bug_severity>enhancement</bug_severity>
+    <target_milestone>---</target_milestone>
+    <everconfirmed>1</everconfirmed>
+    <reporter>Max Mustermann</reporter>
+    <assigned_to>Eva Freiberger</assigned_to>
+    <estimated_time>64.00</estimated_time>
+    <remaining_time>64.00</remaining_time>
+    <actual_time>0.00</actual_time>
+    <deadline>2014-01-02</deadline>
+    <token>kjfgianhngearignrn43it4</token>
+    <long_desc>
+      <commentid>1</commentid>
+      <who>Max Mustermann</who>
+      <bug_when>2014-01-01 16:48:53 +0200</bug_when>
+      <thetext>
+        Test Issue for Script
+      </thetext>
+    </long_desc>
+  </bug>
+  <bug>
+    <bug_id>2</bug_id>
+    <creation_ts>2014-01-01 16:48:00 +0200</creation_ts>
+    <short_desc>Zweiter Test eines Testes</short_desc>
+    <delta_ts>2014-01-01 16:48:53 +0200</delta_ts>
+    <reporter_accessible>1</reporter_accessible>
+    <cclist_accessible>1</cclist_accessible>
+    <classification_id>1</classification_id>
+    <classification>Unclassified</classification>
+    <product>Test</product>
+    <component>Logik</component>
+    <version>2</version>
+    <rep_platform>All</rep_platform>
+    <op_sys>All</op_sys>
+    <bug_status>NEW</bug_status>
+    <priority>P1</priority>
+    <bug_severity>enhancement</bug_severity>
+    <target_milestone>---</target_milestone>
+    <everconfirmed>1</everconfirmed>
+    <reporter>Max Mustermann</reporter>
+    <assigned_to>Eva Freiberger</assigned_to>
+    <estimated_time>64.00</estimated_time>
+    <remaining_time>64.00</remaining_time>
+    <actual_time>0.00</actual_time>
+    <deadline>2014-01-02</deadline>
+    <token>kjfgianhngearignrn43it4</token>
+    <long_desc>
+      <commentid>1</commentid>
+      <who>Max Mustermann</who>
+      <bug_when>2014-01-01 16:48:53 +0200</bug_when>
+      <thetext>
+        Second Test Issue for Script
+      </thetext>
+    </long_desc>
+  </bug>
+</bugzilla>
