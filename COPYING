@@ -1,4 +1,4 @@
-2Redmine - Ruby Script to import issues from bugzilla and otrs into openproject.
+2Openproject - Ruby Script to import issues from bugzilla and otrs into openproject.
 Copyright (C) 2018 Puzzle ITC GmbH.
 
 This program is free software: you can redistribute it and/or modify

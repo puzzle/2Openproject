@@ -1,9 +1,9 @@
 # encoding: utf-8
 
-#  Copyright (c) 2016, Puzzle ITC GmbH. This file is part of
-#  2Redmine and licensed under the Affero General Public License version 3 or later.
+#  Copyright (c) 2018, Puzzle ITC GmbH. This file is part of
+#  2Openproject and licensed under the Affero General Public License version 3 or later.
 #  See the COPYING file at the top-level directory or at
-#  https://github.com/puzzle/2Redmine.
+#  https://github.com/puzzle/2Openproject.
 
 class OtrsImporter < Importer
 
@@ -20,7 +20,7 @@ class OtrsImporter < Importer
   end
 
   #
-  # redmine_issues Attributes
+  # openproject_workpackage Attributes
   #
   def project(ticket)
     @params[:project_id]
@@ -56,14 +56,19 @@ class OtrsImporter < Importer
     ticket[:title]
   end
 
+  def priority(ticket)
+    ticket[:priority_id]
+  end
+
+
   def status(ticket)
     status = otrs_ticket_status(ticket[:ticket_state_id])
-    redmine_status_id = case status
+    openproject_status_id = case status
     when 'new' then 1
     when 'check efficacy' then 7
     else 3
     end
-    redmine_status_id
+    openproject_status_id
   end
 
   def version(ticket)
@@ -71,7 +76,7 @@ class OtrsImporter < Importer
   end
 
   def _links(ticket)
-    links = {priority: {href: '/api/v3/priorities/4'}, status: {href: "/api/v3/statuses/#{@params[:status_id]}"}, type: {href: '/api/v3/types/2'},version: {href: "/api/v3/versions/#{@params[:version_id]}"}}
+    links = {priority: {href: "/api/v3/priorities/#{@params[:priority_id]}"}, status: {href: "/api/v3/statuses/#{@params[:status_id]}"}, type: {href: "/api/v3/types/#{@params[:type_id]}"},version: {href: "/api/v3/versions/#{@params[:version_id]}"}}
     links
   end
 

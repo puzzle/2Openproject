@@ -1,9 +1,10 @@
 # encoding: utf-8
 
-#  Copyright (c) 2016, Puzzle ITC GmbH. This file is part of
-#  2Redmine and licensed under the Affero General Public License version 3 or later.
+#  Copyright (c) 2018, Puzzle ITC GmbH. This file is part of
+#  2Openproject and licensed under the Affero General Public License version 3 or later.
 #  See the COPYING file at the top-level directory or at
-#  https://github.com/puzzle/2Redmine.
+#  https://github.com/puzzle/2Openproject.
+
 require 'xmlsimple'
 require 'json'
 require 'uri'
@@ -11,7 +12,7 @@ require 'net/http'
 require 'net/https'
 #require 'pry'
 
-class OpenprojectExporter 
+class Exporter 
 
   def initialize (workpackage, url, project_id, api_key)
 #    puts url

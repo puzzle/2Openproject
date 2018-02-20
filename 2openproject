@@ -2,10 +2,10 @@
 
 # encoding: utf-8
 
-#  Copyright (c) 2016, Puzzle ITC GmbH. This file is part of
-#  2Redmine and licensed under the Affero General Public License version 3 or later.
+#  Copyright (c) 2018, Puzzle ITC GmbH. This file is part of
+#  2Openproject and licensed under the Affero General Public License version 3 or later.
 #  See the COPYING file at the top-level directory or at
-#  https://github.com/puzzle/2Redmine.
+#  https://github.com/puzzle/2Openproject.
 
 require 'date'
 require 'json'
@@ -13,7 +13,7 @@ require 'uri'
 require 'net/http'
 require 'rest-client'
 require './lib/openproject_workpackage.rb'
-require './lib/openproject_exporter.rb'
+require './lib/exporter.rb'
 require './lib/option_handler.rb'
 require './lib/importers/importer.rb'
 require './lib/importers/bugzilla_importer.rb'
@@ -27,13 +27,10 @@ include OptionHandler
 
   def self.execute
     raise 'Ruby Version has to be equal or greater than 1.9.3' if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('1.9.3')
-    puts "Jetzt kommt der optionHandler!"
     options = OptionHandler.parse
-    puts "Jetzt der lange Import!"
 
-# hier eine abfrage welchen exporter:
     openproject_workpackages = Importer.export_issues(options)
-    e = OpenprojectExporter.new(openproject_workpackages, options[:url], options[:project_id], options[:apikey])
+    e = Exporter.new(openproject_workpackages, options[:url], options[:project_id], options[:apikey])
     e.export
 
 #    puts "#{openproject_workpackages.count} issues exported to openproject successfully!"

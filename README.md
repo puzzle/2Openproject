@@ -1,14 +1,14 @@
-# 2Redmine Readme
+# 2Openproject Readme
 
-This README explains how to use 2Redmine. 
+This README explains how to use 2Openproject. 
 
 Here you will find a short introduction to it.
 
-2Redmine is a Script to Import Bugs/Tickets from a tool into Redmine.
+2Openproject is a Script to Import Bugs/Tickets from a tool into Openproject.
 
 ## Prerequisites
 
-If you want to use 2Redmine, you need the following things:
+If you want to use 2Openproject, you need the following things:
 
 -Git
 
@@ -60,9 +60,9 @@ Bundler provides an environment for Ruby projects by tracking and installing the
 $ gem install bundler
 ```
 
-### How to clone 2Redmine repository 
+### How to clone 2Openproject repository 
 
-Clone 2Redmine repository in your current directory:
+Clone 2Openproject repository in your current directory:
 
 ```
 $ git clone repository-url
@@ -70,7 +70,7 @@ $ git clone repository-url
 Example:
 
 ```
-$ git clone https://github.com/example/2Redmine.git
+$ git clone https://github.com/example/2Openproject.git
 ```
 
 Change into the new directory:
@@ -82,7 +82,7 @@ $ cd new directory name
 Example:
 
 ```
-$ cd 2Redmine/
+$ cd 2Openproject/
 ```
 
 Execute bundle install:
@@ -105,9 +105,9 @@ $ sudo apt-get install libmysqlcient-dev
 $ sudo gem install mysql
 ```
 
-## How to import Bugs/Tickets into Redmine
+## How to import Bugs/Tickets into openproject
 
-Change into your 2Redmine directory:
+Change into your 2Openproject directory:
 
 ```
 $ cd directory name
@@ -116,28 +116,28 @@ $ cd directory name
 Example:
 
 ```
-$ cd 2Redmine/
+$ cd 2Openproject/
 ```
 
 Enter the following command with its parameters:
 
 ```
-$ ./2redmine 
---redmine-source ../../example_file
---redmine-projectid projectid
---redmine-apikey apikey
---redmine-url https://redmine-url/projects/project
+$ ./2Openproject 
+--openproject-source ../../example_file
+--openproject-projectid projectid
+--openproject-apikey apikey
+--openproject-url https://openproject-url/projects/project
 --source-tool source-tool
 ```
 
 Example:
 
 ```
-$ ./2redmine 
---redmine-source /home/mmustermann/Desktop/bugzilla_bugs.xml
---redmine-projectid 1
---redmine-apikey 143b50e261187g461h1677bd4afdd260fc98tf9j
---redmine-url https://redmine-test.example.ch/projects/test
+$ ./2Openproject 
+--openproject-source /home/mmustermann/Desktop/bugzilla_bugs.xml
+--openproject-projectid 1
+--openproject-apikey 143b50e261187g461h1677bd4afdd260fc98tf9j
+--openproject-url https://openproject-test.example.ch/projects/test
 --source-tool bugzilla
 ```
 
@@ -148,22 +148,22 @@ Example:
 Bugzilla importer imports the bugs from a xml file. Export the xml file manual from bugzilla. 
 
 ```
- ./2redmine --redmine-source ../../example_file --redmine-projectid 12121212 --redmine-apikey 3ithrfj4uihguh --redmine-url https://redmine.example.ch --source-tool bugzilla --status-id 2
+ ./2Openproject --openproject-source ../../example_file --openproject-projectid 12121212 --openproject-apikey 3ithrfj4uihguh --openproject-url https://openproject.example.ch --source-tool bugzilla --status-id 2
 ```
 or
 
 OTRS importer imports ticket from the OTRS database. You need a database user with at least read permisson.
 
 ```
- ./2redmine --redmine-source ../../example_file --redmine-projectid 12121212 --redmine-apikey 3ithrfj4uihguh --redmine-url https://redmine.example.ch --source-tool otrs --status-id 2 --otrs-query p25 --otrs-queue MyQueue
+ ./2Openproject --openproject-source ../../example_file --openproject-projectid 12121212 --openproject-apikey 3ithrfj4uihguh --openproject-url https://openproject.example.ch --source-tool otrs --status-id 2 --otrs-query p25 --otrs-queue MyQueue
 ```
 
 | Params | Description           |
 | ------------------------------- |:-------------:|
-| --redmine-source     | Path to the File you wish to import |
-| --redmine-projectid     | The redmine project id you wish your issues to import in      |
-| --redmine-apikey | The API key to access to your redmine (MyAccount -> on the right side)      |
-| --redmine-url | URL to the Redmine  |
+| --openproject-source     | Path to the File you wish to import |
+| --openproject-projectid     | The openproject project id you wish your issues to import in      |
+| --openproject-apikey | The API key to access to your openproject (MyAccount -> on the right side)      |
+| --openproject-url | URL to the openproject  |
 | --source-tool | which source tool you want to use (required) | Options: bugzilla, OTRS |
 | --status-id | The status-id you want to set to this file export (by default is set 1)|
 | --otrs-query | otrs ticket title filter|
@@ -171,7 +171,7 @@ OTRS importer imports ticket from the OTRS database. You need a database user wi
 
 ### How do I get the StatusId or ProjectId?
 
-Go on the redmine
+Go on the openproject
 
 Type in the url: 
 
@@ -181,9 +181,9 @@ Type in the url:
 
 Examples:
 
-ProjectId: https://redmine.example.com/ptojects.xml
+ProjectId: https://openproject.example.com/ptojects.xml
 
-StatusId: https://redmine.example.com/issue_statuses.xml
+StatusId: https://openproject.example.com/issue_statuses.xml
 
 You have to enter your password an then you see the xml file with the id's.
 

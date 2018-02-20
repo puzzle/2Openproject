@@ -1,9 +1,9 @@
 # encoding: utf-8
 
-#  Copyright (c) 2016, Puzzle ITC GmbH. This file is part of
-#  2Redmine and licensed under the Affero General Public License version 3 or later.
+#  Copyright (c) 2018, Puzzle ITC GmbH. This file is part of
+#  2Openproject and licensed under the Affero General Public License version 3 or later.
 #  See the COPYING file at the top-level directory or at
-#  https://github.com/puzzle/2Redmine.
+#  https://github.com/puzzle/2Openproject.
 
 require 'optparse'
 
@@ -19,7 +19,7 @@ module OptionHandler
       opt.banner = 'Usage: opt_parser COMMAND [OPTIONS]'
       opt.separator  ''
       opt.separator  'Commands'
-      opt.separator  '     2redmine: copy to redmine'
+      opt.separator  '     2openproject: copy to openproject'
       opt.separator  ''
       opt.separator  'Options'
 

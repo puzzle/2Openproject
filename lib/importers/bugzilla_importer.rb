@@ -1,10 +1,10 @@
 # encoding: utf-8
 
-#  Copyright (c) 2016, Puzzle ITC GmbH. This file is part of
-#  2Redmine and licensed under the Affero General Public License version 3 or later.
+#  Copyright (c) 2018, Puzzle ITC GmbH. This file is part of
+#  2Openproject and licensed under the Affero General Public License version 3 or later.
 #  See the COPYING file at the top-level directory or at
-#  https://github.com/puzzle/2Redmine.
-
+#  https://github.com/puzzle/2Openproject.
+ 
 class BugzillaImporter < Importer
 
   def initialize(params)
@@ -22,15 +22,24 @@ class BugzillaImporter < Importer
     end
   end
 
+  #
+  # openproject_workpackage Attributes
+  #
+
   def format_date(date_str)
     Date.parse(date_str).to_s
   end
 
-  def project_id(issue)
+  def project(issue)
     @params[:project_id]
   end
 
-  def start_date(issue)
+ def _type(ticket)
+    pack = "WorkPackage"
+    pack
+  end
+
+  def startDate(issue)
     format_date(issue['creation_ts'][0])
   end
 
@@ -38,20 +47,13 @@ class BugzillaImporter < Importer
     issue['estimated_time'][0]
   end
 
-  def created_on(issue)
-    format_date(issue['creation_ts'][0])
-  end
-
-  def updated_on(issue)
-    format_date(issue['delta_ts'][0])
-  end
-
-  def story_points(issue)
-    issue['estimated_time'][0]
-  end
-
   def tracker_id(issue)
     issue['bug_severity'][0] == 'enhancement' ? 2 : 1
+  end
+
+  def _links(issue)
+    links = {priority: {href: "/api/v3/priorities/#{@params[:priority_id]}"}, status: {href: "/api/v3/statuses/#{@params[:status_id]}"}, type: {href: "/api/v3/types/#{@params[:type_id]}"},version: {href: "/api/v3/versions/#{@params[:version_id]}"}}
+    links
   end
 
   def description(issue)
