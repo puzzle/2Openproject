@@ -78,8 +78,15 @@ class OtrsImporter < Importer
   end
 
   def _links(ticket)
-    links = {priority: {href: "/api/v3/priorities/#{@params[:priority_id]}"}, status: {href: "/api/v3/statuses/#{@params[:status_id]}"}, type: {href: "/api/v3/types/#{@params[:type_id]}"}, version: {href: "/api/v3/versions/#{@params[:version_id]}"}}
-    links
+    priority = @params[:priority_id] || DEFAULT_VALUES[:priority_id]
+    status = @params[:status_id] || DEFAULT_VALUES[:status_id]
+    type = @params[:type_id] || DEFAULT_VALUES[:type_id]
+    version = @params[:version_id]
+
+    links = {priority: {href: "/api/v3/priorities/#{priority}"},
+               status: {href: "/api/v3/statuses/#{status}"},
+                 type: {href: "/api/v3/types/#{type}"},
+              version: {href: "/api/v3/versions/#{version}"}}
   end
 
 
