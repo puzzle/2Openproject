@@ -52,7 +52,7 @@ module OptionHandler
       end
 
       opt.on('-t','--type-id Type-id', 'which type id you want to use (Default = 2)') do |type_id|
-        options[:version_id] = type_id
+        options[:type_id] = type_id
       end
 
       opt.on('-p','--priority-id Priority-id', 'which priority id you want to use (Default = 4)') do |priority_id|

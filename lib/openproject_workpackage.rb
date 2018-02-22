@@ -9,8 +9,8 @@ class OpenprojectWorkpackage
   ATTRSLINKS = [:status, :type, :priority, :version]
   ATTRS = [:_type, :_links, :subject, :startDate, :description]
 
-  attr_accessor *ATTRS
-  attr_accessor *ATTRSLINKS
+  attr_accessor(*ATTRS)
+  attr_accessor(*ATTRSLINKS)
 
   def initialize(params = {})
     params.each do |key, value|

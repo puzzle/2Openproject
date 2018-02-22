@@ -36,8 +36,6 @@ class OtrsImporter < Importer
   end
 
   def description(ticket)
-#    finaldesc = %Q({format: 'textile',)
-
     desc = "OTRS\n"
     ticket[:customer_id].nil? ? desc += "\n \n" : desc += "Originally reported by: #{ticket[:customer_id]} \n \n"
 
@@ -45,8 +43,8 @@ class OtrsImporter < Importer
       desc += "*#{ta[:create_time]}, #{ta[:a_from]}:* \n"
       desc += "#{ta[:a_body]}"
     end
-    desc_short=desc[0..63000].gsub(/\s\w+$/,'...')
-#    finaldesc += %Q("raw": '#{desc}', "html": '<p>#{desc}</p>'})
+    # limit description size, mysql collumn fits only 64kByte:
+    desc_short=desc[0..63000].gsub('','')
     finaldesc = {format: 'textile', raw: "#{desc_short}"}
 
     finaldesc
@@ -58,6 +56,10 @@ class OtrsImporter < Importer
 
   def priority(ticket)
     ticket[:priority_id]
+  end
+
+  def type(ticket)
+    ticket[:type_id]
   end
 
 
@@ -76,7 +78,7 @@ class OtrsImporter < Importer
   end
 
   def _links(ticket)
-    links = {priority: {href: "/api/v3/priorities/#{@params[:priority_id]}"}, status: {href: "/api/v3/statuses/#{@params[:status_id]}"}, type: {href: "/api/v3/types/#{@params[:type_id]}"},version: {href: "/api/v3/versions/#{@params[:version_id]}"}}
+    links = {priority: {href: "/api/v3/priorities/#{@params[:priority_id]}"}, status: {href: "/api/v3/statuses/#{@params[:status_id]}"}, type: {href: "/api/v3/types/#{@params[:type_id]}"}, version: {href: "/api/v3/versions/#{@params[:version_id]}"}}
     links
   end
 
@@ -121,7 +123,7 @@ class OtrsImporter < Importer
   end
 
   def db_credentials
-    credentials = YAML.load(File.read('db_credentials.yml'))
+    YAML.load(File.read('db_credentials.yml'))
   end
 
   #
@@ -141,8 +143,8 @@ class OtrsImporter < Importer
 
   def queue_tickets
     tickets.where(queue_id: queue_id.first[:id].to_s)
-  rescue
-    puts 'Queue not found in database'
+  rescue NoMethodError
+    raise 'Queue ' + @params[:queue] + ' not found in database'
   end
 
   def ticket_articles(ticket_id)

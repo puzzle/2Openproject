@@ -23,9 +23,9 @@ class ExporterTest < Minitest::Test
       api_key: 'th1s1s4t3st',
       url:  'https://something.thisandthat-works.com'
     }
-    redmine_issues = Importer.redmine_issues(options)
+    openproject_workpackages = Importer.export_issues(options)
 
-    exporter = Exporter.new(redmine_issues, options[:url], options[:api_key])
+    exporter = Exporter.new(openproject_workpackages, options[:url], options[:project_id], options[:api_key])
 
     exception = assert_raises(Exception) do
       exporter.export

@@ -15,32 +15,31 @@ require 'active_support/inflector'
 
 class BugzillaImporterTest < Minitest::Test
 
-  def test_convert_bugzilla_bug_to_redmine_issue
+  def test_convert_bugzilla_bug_to_openproject_workpackage
     options = {
       source: 'test/test_file.xml',
       project_id: '183',
-      source_tool: 'bugzilla'
+      source_tool: 'bugzilla',
+      status_id: 1,
+      type_id: 2 ,
+      priority_id: 4
     }
 
-    redmine_issues = Importer.redmine_issues(options)
+    openproject_workpackages = Importer.export_issues(options)
 
-    redmine_issue = redmine_issues[0]
-    assert_equal "183", redmine_issue.project_id
-    assert_equal 2, redmine_issue.tracker_id
-    assert_equal "#1 - Test eines Testes", redmine_issue.subject
+    openproject_workpackage = openproject_workpackages[0]
+    assert_equal "#1 - Test eines Testes", openproject_workpackage.subject
     description = "BugzillaBug for Test (Logik) 2: \nStatus: NEW / Priority: P1 / Severity: enhancement \n\n \n*2014-01-01 16:48:53 +0200, :* \n<pre>\n        Test Issue for Script\n      </pre>"
-    assert_equal description, redmine_issue.description
-    assert_equal "2014-01-01", redmine_issue.start_date
-    assert_equal "64.00", redmine_issue.estimated_hours
-    assert_equal "2014-01-01", redmine_issue.created_on
-    assert_equal "2014-01-01", redmine_issue.updated_on
-    assert_equal "64.00", redmine_issue.story_points
-    assert_equal 1, redmine_issue.status_id
-    assert_equal 4, redmine_issue.priority_id
-    assert_equal false, redmine_issue.is_private
+#require 'pry'; binding.pry
+    assert_equal description, openproject_workpackage.description[:raw]
+    assert_equal "2014-01-01", openproject_workpackage.startDate
+    assert_equal "/api/v3/statuses/1", openproject_workpackage._links[:status][:href]
+    assert_equal "/api/v3/priorities/4", openproject_workpackage._links[:priority][:href]
+    assert_equal "/api/v3/types/2", openproject_workpackage._links[:type][:href]
     
+
     second_bug_description = "BugzillaBug for Test (Logik) 2: \nStatus: NEW / Priority: P1 / Severity: enhancement \n\n \n*2014-01-01 16:48:53 +0200, :* \n<pre>\n        Second Test Issue for Script\n      </pre>"
-    assert_equal second_bug_description, redmine_issues[1].description
+    assert_equal second_bug_description, openproject_workpackages[1].description[:raw]
   end
 
   def test_abort_if_unknown_source_tool

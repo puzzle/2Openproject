@@ -32,7 +32,7 @@ include OptionHandler
     openproject_workpackages = Importer.export_issues(options)
     e = Exporter.new(openproject_workpackages, options[:url], options[:project_id], options[:apikey])
     e.export
-
+# e.update
 #    puts "#{openproject_workpackages.count} issues exported to openproject successfully!"
   end
 

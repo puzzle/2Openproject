@@ -12,7 +12,6 @@ class Importer
     priority_id: 4,
     type_id: 2,
     priority_name: 'Normal',
-#    fixed_version_id: 1521
   }
 
   class << self
@@ -32,16 +31,12 @@ class Importer
     end
 
     def to_openproject_workpackage(entry)
-    params = {}
-    OpenprojectWorkpackage::ATTRS.each do |a|
-      params[a] = param_value(a, entry)
+      params = {}
+      OpenprojectWorkpackage::ATTRS.each do |a|
+        params[a] = param_value(a, entry)
+      end
+      OpenprojectWorkpackage.new(params)
     end
-#      puts "XXXXXXXXXXXX"
-#      puts params
-#      puts "YYYYY_to_JSSONA_YYYYYYYy"
-#      puts params.to_json
-    OpenprojectWorkpackage.new(params)
-  end
 
     def param_value(attr, entry)
       if @importer.respond_to?(attr) && !@importer.send(attr, entry).nil?

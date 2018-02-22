@@ -20,7 +20,10 @@ class OtrsImporterTest < Minitest::Test
     options = {
       query: "test",
       project_id: '666',
-      source_tool: 'otrs'
+      source_tool: 'otrs',
+      status_id: 1,
+      type_id: 2 ,
+      priority_id: 4
     }
 
     otrs_importer = OtrsImporter.new(options)
@@ -30,32 +33,45 @@ class OtrsImporterTest < Minitest::Test
     otrs_importer.expects(:ticket_articles).with(ticket.first[:id]).returns(article).times(3)
     Importer.expects(:initialize_importer).with(options).returns(otrs_importer)
 
-    redmine_issue = Importer.redmine_issues(options)
+    openproject_workpackages = Importer.export_issues(options)
 
-    redmine_issue = redmine_issue.first
-    assert_equal "666", redmine_issue.project_id
-    assert_equal 2, redmine_issue.tracker_id
-    assert_equal "test the test ticket for testing something for test reason", redmine_issue.subject
-    description = "OTRS \nOriginally reported by: test@test.ch \n \n*2012-01-06 10:30:02 +0100, Markus Tester <tester@test.ch>:* \n<pre>Dies ist der body eines article und zugleich auch ein Test</pre>"
-    assert_equal description, redmine_issue.description
-    assert_equal "2012-01-06", redmine_issue.start_date
-    assert_equal "2012-01-06", redmine_issue.created_on
-    assert_equal "2012-03-28", redmine_issue.updated_on
-    assert_equal nil, redmine_issue.story_points
-    assert_equal 1, redmine_issue.status_id
-    assert_equal 4, redmine_issue.priority_id
-    assert_equal false, redmine_issue.is_private
+    openproject_workpackage = openproject_workpackages.first
+    assert_equal "test the test ticket for testing something for test reason", openproject_workpackage.subject
+    description = "OTRS\nOriginally reported by: test@test.ch \n \n*2012-01-06 10:30:02 +0100, Markus Tester <tester@test.ch>:* \nDies ist der body eines article und zugleich auch ein Test"
+# require 'pry'; binding.pry
+    assert_equal description, openproject_workpackage.description[:raw]
+    assert_equal "2012-01-06", openproject_workpackage.startDate
+    assert_equal "/api/v3/statuses/1", openproject_workpackage._links[:status][:href]
+    assert_equal "/api/v3/priorities/4", openproject_workpackage._links[:priority][:href]
+    assert_equal "/api/v3/types/2", openproject_workpackage._links[:type][:href]
   end
 
+  def test_otrs_queue_not_found
+    options = {
+      project_id: '666',
+      source_tool: 'otrs',
+      queue: 'batzelhanft'
+    }
+
+    otrs_importer = OtrsImporter.new(options)
+    otrs_importer.expects(:tickets).returns(ticket)
+    Importer.expects(:initialize_importer).with(options).returns(otrs_importer)
+
+    e = assert_raises(RuntimeError) do
+      Importer.export_issues(options)
+    end
+    
+    assert_match(/Queue batzelhanft not found/, e.message)
+  end
 
 
   private
 
   def ticket
-    ticket =  [{  id: 2462,
+    [{  id: 2462,
                  tn: "0313524598",
                  title: "test the test ticket for testing something for test reason",
-                 queue_id: 40,
+                 queue_id: 43,
                  ticket_lock_id: 1,
                  type_id: 1,
                  service_id: nil,
@@ -82,7 +98,7 @@ class OtrsImporterTest < Minitest::Test
 
 
   def article
-    article =   [{create_time: "2012-01-06 10:30:02 +0100",
+    [{create_time: "2012-01-06 10:30:02 +0100",
                  a_from: "Markus Tester <tester@test.ch>",
                  a_body: "Dies ist der body eines article und zugleich auch ein Test"}]
   end

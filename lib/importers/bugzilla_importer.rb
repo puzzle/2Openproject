@@ -34,7 +34,7 @@ class BugzillaImporter < Importer
     @params[:project_id]
   end
 
- def _type(ticket)
+  def _type(ticket)
     pack = "WorkPackage"
     pack
   end
@@ -66,14 +66,15 @@ class BugzillaImporter < Importer
       desc += "*#{ld['bug_when'][0]}, #{ld['who'][0]['content']}:* \n"
       desc += "<pre>#{ld['thetext'][0]}</pre>"
     end
-    desc
+    desc_short=desc[0..63000].gsub('','')
+    finaldesc = {format: 'textile', raw: "#{desc_short}"}
   end
 
   def subject(issue)
     "##{issue['bug_id'][0]} - #{issue['short_desc'][0]}"
   end
 
-  def status_id(issue)
+  def status(issue)
     @params[:status_id]
   end
 end
